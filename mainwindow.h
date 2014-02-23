@@ -4,11 +4,15 @@
 #include <QMainWindow>
 #include <QProcess>
 #include <QFileDialog>
+#include <QDebug>
 
 
 namespace Ui {
 class MainWindow;
 }
+
+
+enum templates {normal, compact, record};
 
 class MainWindow : public QMainWindow
 {
@@ -20,7 +24,10 @@ public:
     
 
     void ms (QString ims);
+    void ms (double ims);
 
+
+     template<typename T> void   msres (T ms); //выводит сообщение в консоль результатов
 
 
     double fingerMatch (QString ionepath, QString isecondpath);
@@ -28,7 +35,7 @@ public:
 
 
 
-    void matchFolders ();
+    void matchFolders (QString iRegisterFolderPath, QString iVerifFoldersPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif);
 
 
 

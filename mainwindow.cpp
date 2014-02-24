@@ -6,7 +6,20 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    TableContendor table (10,20);
+
+
+    QSettings set ;
+
+    ui->lineSel1->setText(set.value("regpath", "").toString());
+    ui->lineSel2->setText(set.value("verpath", "").toString());
+
+
+
+
+
+
+
+
 
 }
 
@@ -41,7 +54,10 @@ template<typename T> void   MainWindow::msres (T ms) //выводит сообщ
 
 void MainWindow::on_pushSel1_clicked()
 {
-ui->lineSel1->setText(QFileDialog::getOpenFileName(this, QString::fromUtf8("Имя файла"), "*.bin"));
+//ui->lineSel1->setText(QFileDialog::getOpenFileName(this, QString::fromUtf8("Имя файла"), "*.bin"));
+
+
+    ui->lineSel1->setText(QFileDialog::getExistingDirectory(this,tr ("Open Directory")));
 
 /*\
 
@@ -55,25 +71,82 @@ QFileDialog::ShowDirsOnly
 
 void MainWindow::on_pushSel2_clicked()
 {
-ui->lineSel2->setText(QFileDialog::getOpenFileName(this, QString::fromUtf8("Имя файла"), "*.bin"));
+//ui->lineSel2->setText(QFileDialog::getOpenFileName(this, QString::fromUtf8("Имя файла"), "*.bin"));
+    ui->lineSel2->setText(QFileDialog::getExistingDirectory(this,tr ("Open Directory")));
+}
+
+
+templates MainWindow::getTemplate (QComboBox * icombo)
+{
+    switch (icombo->currentIndex())
+    {
+        case 0:
+        return normal;
+
+        case 1:
+        return compact;
+
+        case 2:
+        return record;
+
+    }
+    qDebug()<<"Error getTemplate";
+    return normal;
 }
 
 void MainWindow::on_pushMe_clicked()
 {
+
+ui->console->clear();
+ui->console_2->clear();
+ui->console_3->clear();
+
+
 
     //ms (QString::number(fingerMatch(ui->lineSel1->text(), ui->lineSel2->text())));
     //matchFolders();
 
 
 
-    QString regpath = "/home/reiner/testFolder/Ilia11FEB2014/11_2014-02-11.11:01:40";
-    QString allpath = "/home/reiner/testFolder/Ilia11FEB2014";
+//    QString regpath = "/home/reiner/testFolder/Ilia11FEB2014/11_2014-02-11.11:01:40";
+  //  QString allpath = "/home/reiner/testFolder/Ilia11FEB2014";
+
+    QString regpath = ui->lineSel1->text();
+    QString allpath = ui->lineSel2->text();
+
+
+
+    QSettings set;
+    set.setValue("regpath", regpath);
+    set.setValue("verpath", allpath);
+
+
+
+
+
 /*
     TableContendor * table  = new TableContendor(1,20);
     matchFolders(regpath, allpath, normal, normal, 0,  1, table );
     table->outTableToTextFile("res.txt");
     delete table;*/
-    TableContendor table = superMatchFolder(allpath, allpath, normal, normal, 0, 1, 0);
+
+
+
+
+    ui->console_3->appendPlainText("Short info about test");
+
+    ui->console_3->appendPlainText(tr("Registration Folder Pool %1").arg(regpath) );
+    ui->console_3->appendPlainText(tr("Verification Folder Pool %1").arg(allpath) );
+
+    ui->console_3->appendPlainText(tr ("Template registration %1 %2").arg(ui->comboTemplateRegist->currentIndex()).arg(ui->comboTemplateRegist->currentText()));
+    ui->console_3->appendPlainText(tr ("Template verification %1 %2").arg(ui->comboTemplateVerif->currentIndex()).arg(ui->comboTemplateVerif->currentText()));
+
+    ui->console_3->appendPlainText("Information about are flat prints are used is to be entered manually");
+
+
+
+
+    TableContendor table = superMatchFolder(regpath, allpath, getTemplate(ui->comboTemplateRegist), getTemplate(ui->comboTemplateVerif), ui->checkRegPrint->isChecked(), ui->checkVerifPrint->isChecked());
     table.outTableToTextFile("out.txt");
 
 }

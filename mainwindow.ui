@@ -14,75 +14,209 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_5">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
       <item>
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Путь</string>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>РЕГИСТРАЦИЯ</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Путь</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineSel1"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushSel1">
+            <property name="text">
+             <string>Select</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Выбор типа шаблона</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboTemplateRegist">
+            <item>
+             <property name="text">
+              <string>normal</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>compact</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>record</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkRegPrint">
+          <property name="text">
+           <string>Искать 'print' в файлах регистрации</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineSel1"/>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushSel1">
-        <property name="text">
-         <string>Select</string>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="label_8">
+          <property name="text">
+           <string>ВЕРИФИКАЦИЯ</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Путь</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineSel2"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushSel2">
+            <property name="text">
+             <string>Select</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Выбор типа шаблона</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboTemplateVerif">
+            <item>
+             <property name="text">
+              <string>normal</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>compact</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>record</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkVerifPrint">
+          <property name="text">
+           <string>Искать 'print' в файлах верификации</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
-    <item row="0" column="1" colspan="2">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>Путь</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="lineSel2"/>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushSel2">
-        <property name="text">
-         <string>Select</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="3" column="0" colspan="3">
+    <item>
      <widget class="QPushButton" name="pushMe">
       <property name="text">
        <string>PUSH ME!</string>
       </property>
      </widget>
     </item>
-    <item row="5" column="2">
-     <widget class="QPlainTextEdit" name="console_2"/>
-    </item>
-    <item row="5" column="0">
-     <widget class="QPlainTextEdit" name="console"/>
-    </item>
-    <item row="4" column="0">
-     <widget class="QLabel" name="label_3">
-      <property name="text">
-       <string>Консоль отладки</string>
+    <item>
+     <widget class="QPlainTextEdit" name="console_3">
+      <property name="minimumSize">
+       <size>
+        <width>300</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>5000</width>
+        <height>100</height>
+       </size>
       </property>
      </widget>
     </item>
-    <item row="4" column="2">
-     <widget class="QLabel" name="label_4">
-      <property name="text">
-       <string>Консоль результатов</string>
-      </property>
-     </widget>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Консоль отладки</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPlainTextEdit" name="console"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Консоль результатов</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPlainTextEdit" name="console_2"/>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>

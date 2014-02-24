@@ -7,6 +7,9 @@
 #include <QDebug>
 #include <QRegularExpression>
 #include <tablecontendor.h>
+#include <QComboBox>
+#include <QSettings>
+
 
 namespace Ui {
 class MainWindow;
@@ -65,8 +68,9 @@ public:
      * @param isPrintVerif
      * @param itbl
      */
-    TableContendor superMatchFolder (QString iRegisterFoldersPoolPath, QString iVerifFoldersPoolPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif, TableContendor * itbl);
+    TableContendor superMatchFolder (QString iRegisterFoldersPoolPath, QString iVerifFoldersPoolPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif, TableContendor * itbl=0);
 
+    templates getTemplate (QComboBox * icombo);
 
 
 

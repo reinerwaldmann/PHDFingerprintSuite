@@ -1,5 +1,11 @@
 #ifndef TABLECONTENDOR_H
 #define TABLECONTENDOR_H
+
+
+
+#include <QString>
+#include <QVector>
+#include <QDebug>
 struct twoHandsResults
 {
     double  right [5];
@@ -12,7 +18,10 @@ public:
 
     TableContendor(int columns, int rows);
     double getValue (int column, int row);
-    void setValue (int column, int row);
+    void setValue (int column, int row, double value);
+    void setColumnName (int column, QString name);
+    void setRowName (int row, QString name);
+
     int getNumOfColumns ();
     int getNumOfRows ();
     void clear ();
@@ -32,10 +41,14 @@ protected:
     int counterRowNames;
     int numOfColumns;
     int numOfRows;
-    double table [][]; //first is a number of a column, second is a number of a row
-    //generic way - to make the table of QVariant types or separate tables of different types
-    QString columnNames[];
-    QString rowNames[];
+
+ QVector < QVector < double > > table;
+ //first is a number of a column, second is a number of a row
+ //generic way - to make the table of QVariant types or separate tables of different types
+
+
+ QString *columnNames;
+    QString *rowNames;
 };
 
 #endif // TABLECONTENDOR_H

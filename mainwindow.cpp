@@ -6,23 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-/*
-
-    QString Cmd=  tr("ifconfig");
-
-      QProcess *Process= new QProcess(this);
-      Process->start(Cmd); // ,Args
-      if(!Process->waitForFinished())  ms ("some shit");
-
-      QByteArray encodedString = Process->readAll();
-
-      ms(tr(encodedString));
-
-
-
-      delete Process;
-
-*/
+    TableContendor table (10,20);
 
 }
 

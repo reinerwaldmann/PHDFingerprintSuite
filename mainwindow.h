@@ -34,10 +34,38 @@ public:
 
     double fingerMatch (QString ionepath, QString isecondpath);
 
+    /**
+     * @brief matchFolders
+     *берёт папку RegisterFolderPath, и прикладывает ко всем подпапкам VerifFolderPath. Выводит в консоли и выводит в табличный контейнер результаты прикладывания
+     * @param iRegisterFolderPath
+     * @param iVerifFoldersPath
+     * @param itemplateRegistered тип шаблона при регистрации
+     * @param itemplateVerif тип шаблона при верификации
+     * @param isPrintRegister искать ли ключевое слово print в именах файлов  папки регистрации
+     * @param isPrintVerif искать ли ключевое слово print в именах файлах папок верификации
+     * @param itbl  указатель на табличный контейнер
+     * @param colnameInTable столбец в таблице, куда писать данные
+     */
+    void matchFolders (QString iRegisterFolderPath, QString iVerifFoldersPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif, TableContendor * itbl, int colnameInTable=0);
 
 
 
-    void matchFolders (QString iRegisterFolderPath, QString iVerifFoldersPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif);
+
+
+    /**
+     * @brief superMatchFolder
+     * Хтоничный ужас, летящий на крыльях ночи
+     *Берёт пул папок на регистрацию. Каждую из подпапок скармливает matchFolders, каковой в части папок с подпапками на верификацию скармливет пул верификации
+     *данные вкатывает в табличный контейнер, в котором по строчкам идут результаты из папок верификации, а по столбцам - папки регистрации.
+     * @param iRegisterFoldersPoolPath
+     * @param iVerifFoldersPoolPath
+     * @param itemplateRegistered
+     * @param itemplateVerif
+     * @param isPrintRegister
+     * @param isPrintVerif
+     * @param itbl
+     */
+    TableContendor superMatchFolder (QString iRegisterFoldersPoolPath, QString iVerifFoldersPoolPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif, TableContendor * itbl);
 
 
 

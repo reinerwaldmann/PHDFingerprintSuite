@@ -99,10 +99,48 @@ bool TableContendor::areAllColumnNamesFull()
 
 char TableContendor::outTableToTextFile(QString filename)
 {
+    QFile file (filename);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        qDebug()<<"Error cannot open file for output";
+        return 1;
+    }
+
+    QTextStream out(&file);
+
+    out<<" "<<"\t";
+    for (int i=0; i<numOfColumns; i++)
+    {
+        out<<columnNames[i]<<"\t";
+     }
+    out <<"\n";
+
+
+    for (int j=0; j<numOfRows; j++)
+{
+
+        out<<rowNames[j]<<"\t";
+    for (int i=0; i<numOfColumns; i++)
+    {
+        out<<table[i][j]<<"\t";
+
+    }
+
+    out << "\n";
+}
+
+
+
+
+return 0;
 
 
 }
 
 
 twoHandsResults TableContendor::averageOnFingers ()
-{}
+{
+
+
+
+}

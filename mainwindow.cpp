@@ -68,15 +68,81 @@ void MainWindow::on_pushMe_clicked()
 
     QString regpath = "/home/reiner/testFolder/Ilia11FEB2014/11_2014-02-11.11:01:40";
     QString allpath = "/home/reiner/testFolder/Ilia11FEB2014";
-    matchFolders(regpath, allpath, normal, normal, 0, 1);
+/*
+    TableContendor * table  = new TableContendor(1,20);
+    matchFolders(regpath, allpath, normal, normal, 0,  1, table );
+    table->outTableToTextFile("res.txt");
+    delete table;*/
+    TableContendor table = superMatchFolder(allpath, allpath, normal, normal, 0, 1, 0);
+    table.outTableToTextFile("out.txt");
+
+}
+
+TableContendor  MainWindow::superMatchFolder (QString iRegisterFoldersPoolPath, QString iVerifFoldersPoolPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif, TableContendor * itbl)
+{
+
+QDir RegisteredFolderPool (iRegisterFoldersPoolPath);
+RegisteredFolderPool.setFilter(QDir::Dirs);
+QStringList registeredFolderPoolEntries= RegisteredFolderPool.entryList();
+
+QDir VerifFolderPool (iVerifFoldersPoolPath);
+VerifFolderPool.setFilter(QDir::Dirs);
+QStringList VerifFolderPoolEntries= VerifFolderPool.entryList();
+
+int numColumns = registeredFolderPoolEntries.size()-2;
+int numRows = VerifFolderPoolEntries.size()-2;
+
+int nnnn(0);
+if (!iRegisterFoldersPoolPath.compare(iVerifFoldersPoolPath))
+{
+    nnnn=numRows*10-10; //это если пути равны, в этом случае можно на 10 поменьше, так как каждый раз будет на одну папку меньше
+}
+else
+{
+
+    nnnn = numRows*10;
+
+}
+
+TableContendor table(numColumns, nnnn);
+
+int tableColumnCounter(0);
+
+foreach (QString registeredFolderPoolEntry, registeredFolderPoolEntries)
+{
+    if(!registeredFolderPoolEntry.compare("."))
+        continue;
+
+    if(!registeredFolderPoolEntry.compare(".."))
+        continue;
+
+
+
+
+    matchFolders(iRegisterFoldersPoolPath+"/"+registeredFolderPoolEntry, iVerifFoldersPoolPath, itemplateRegistered, itemplateVerif, isPrintRegister, isPrintVerif, &table, tableColumnCounter);
+tableColumnCounter++;
+}
+
+
+return  table;
 
 }
 
 
+
+
+
+
+
 //one folder to many folders around that one, but without one
- void MainWindow::matchFolders (QString iRegisterFolderPath, QString iVerifFoldersPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif)
+ void MainWindow::matchFolders (QString iRegisterFolderPath, QString iVerifFoldersPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif, TableContendor * itbl, int colnameInTable)
  {
-     //regexps
+TableContendor * table = itbl;
+table->setColumnName(colnameInTable, iRegisterFolderPath.mid(iRegisterFolderPath.lastIndexOf("/")+1)); //вписываем название папки
+
+
+
+//regexps
  QString fingers [] = {"thumb","index", "middle", "ring","little"};
  QString hands [] = {"right" , "left"};
  QString print = "_print";
@@ -124,16 +190,6 @@ void MainWindow::on_pushMe_clicked()
        registerTemplateStr= normalS;
           break;
    }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -195,7 +251,7 @@ if (counterleft) {
 
 
 
-
+int counterRowsInTable(0);
 
 
 //now we compare:    ONE to MANY
@@ -240,11 +296,23 @@ IMPORTANT: HERE FILTRATION OF FILENAMES TAKES PLACE!
                  //ms (iVerifFoldersPath+"/"+dirname+"/"+filenm);
 
                  double rs=fingerMatch(rightHandPaths[i], iVerifFoldersPath+"/"+dirname+"/"+filenm );
+
+                if (!colnameInTable)
+                table->setRowName(counterRowsInTable, hands[0]+fingers[i]);
+
+                table->setValue(colnameInTable, counterRowsInTable,rs);
+
+
+
+
                  msres (tr("%1 %2 %3").arg(hands[0]).arg(fingers[i]).arg(rs));
 
                  ms (tr("cmp: %1 & %2 = %3").arg(rightHandPaths[i]).arg(iVerifFoldersPath+"/"+dirname+"/"+filenm ).arg(rs) );
 
-                }
+                 counterRowsInTable++;
+
+
+             }
 
          }
 //left hand
@@ -255,8 +323,17 @@ IMPORTANT: HERE FILTRATION OF FILENAMES TAKES PLACE!
                  //ms (iVerifFoldersPath+"/"+dirname+"/"+filenm);
 
                 double rs=fingerMatch(leftHandPaths[i], iVerifFoldersPath+"/"+dirname+"/"+filenm );
+
+
+               if (!colnameInTable)
+               table->setRowName(counterRowsInTable, hands[1]+fingers[i]);
+
+               table->setValue(colnameInTable, counterRowsInTable,rs);
+
                 msres (tr("%1 %2 %3").arg(hands[1]).arg(fingers[i]).arg(rs));
                 ms (tr("cmp: %1 & %2 = %3").arg(leftHandPaths[i]).arg(iVerifFoldersPath+"/"+dirname+"/"+filenm ).arg(rs) );
+
+                counterRowsInTable++;
 
                 }
 
@@ -269,6 +346,9 @@ IMPORTANT: HERE FILTRATION OF FILENAMES TAKES PLACE!
 
 
       msres (" ");
+
+
+
 
 
 }

@@ -6,6 +6,7 @@
 #include <QString>
 #include <QVector>
 #include <QDebug>
+#include <QFile>
 struct twoHandsResults
 {
     double  right [5];

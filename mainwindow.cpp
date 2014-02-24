@@ -256,7 +256,7 @@ IMPORTANT: HERE FILTRATION OF FILENAMES TAKES PLACE!
                  //ms (iVerifFoldersPath+"/"+dirname+"/"+filenm);
 
                  double rs=fingerMatch(rightHandPaths[i], iVerifFoldersPath+"/"+dirname+"/"+filenm );
-                 msres (rs);
+                 msres (tr("%1 %2 %3").arg(hands[0]).arg(fingers[i]).arg(rs));
 
                  ms (tr("cmp: %1 & %2 = %3").arg(rightHandPaths[i]).arg(iVerifFoldersPath+"/"+dirname+"/"+filenm ).arg(rs) );
 
@@ -271,7 +271,7 @@ IMPORTANT: HERE FILTRATION OF FILENAMES TAKES PLACE!
                  //ms (iVerifFoldersPath+"/"+dirname+"/"+filenm);
 
                 double rs=fingerMatch(leftHandPaths[i], iVerifFoldersPath+"/"+dirname+"/"+filenm );
-                msres (rs);
+                msres (tr("%1 %2 %3").arg(hands[1]).arg(fingers[i]).arg(rs));
                 ms (tr("cmp: %1 & %2 = %3").arg(leftHandPaths[i]).arg(iVerifFoldersPath+"/"+dirname+"/"+filenm ).arg(rs) );
 
                 }
@@ -279,8 +279,12 @@ IMPORTANT: HERE FILTRATION OF FILENAMES TAKES PLACE!
          }
 
 
+
+
      }
 
+
+      msres (" ");
 
 
 }

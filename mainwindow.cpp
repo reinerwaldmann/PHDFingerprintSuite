@@ -94,8 +94,54 @@ templates MainWindow::getTemplate (QComboBox * icombo)
     return normal;
 }
 
+void MainWindow::script ()
+{
+    ui->console->clear();
+    ui->console_2->clear();
+    ui->console_3->clear();
+
+/*
+    qDebug()<<"Test1";
+    TableContendor table = superMatchFolder("/home/reiner/testFolder/Ilia/Roll", "/home/reiner/testFolder/Ilia/Flat", normal, normal, 0, 0);
+    table.outTableToTextFile("roll-flat-normal-normal-DS45-FORK-VOLODJA.txt");
+*/
+
+    QString vol= "/media/0e9cb697-e997-44da-aad5-fd99744c0d31/kristal/Documents/Intek/FingerprintsNeueExp/Vladimir_Ananjev/18FEB2014";
+
+
+    qDebug()<<"Test2";
+    TableContendor  table = superMatchFolder(vol, vol, normal, normal, 0, 1);
+    table.outTableToTextFile("roll-flat-normal-normal-DS45-DS45-VOLODJA.txt");
+
+/*
+    qDebug()<<"Test3";
+    TableContendor table = superMatchFolder("/home/reiner/testFolder/Ilia/Roll", "/home/reiner/testFolder/Ilia/Flat", compact, compact, 0, 0);
+    table.outTableToTextFile("roll-flat-compact-compact-DS45-FORK.txt");
+*/
+
+    qDebug()<<"Test4";
+    table = superMatchFolder(vol, vol, compact, compact, 0, 1);
+    table.outTableToTextFile("roll-flat-compact-compact-DS45-DS45-VOLODJA.txt");
+
+
+    qDebug()<<"Test5";
+    table = superMatchFolder(vol, vol, normal, normal, 1, 1);
+    table.outTableToTextFile("flat-flat-normal-normal-DS45-DS45-VOLODJA.txt");
+
+
+
+
+
+
+
+}
+
+
 void MainWindow::on_pushMe_clicked()
 {
+    script();
+
+    return;
 
 ui->console->clear();
 ui->console_2->clear();
@@ -106,23 +152,15 @@ ui->console_3->clear();
     //ms (QString::number(fingerMatch(ui->lineSel1->text(), ui->lineSel2->text())));
     //matchFolders();
 
-
-
 //    QString regpath = "/home/reiner/testFolder/Ilia11FEB2014/11_2014-02-11.11:01:40";
   //  QString allpath = "/home/reiner/testFolder/Ilia11FEB2014";
 
     QString regpath = ui->lineSel1->text();
     QString allpath = ui->lineSel2->text();
 
-
-
     QSettings set;
     set.setValue("regpath", regpath);
     set.setValue("verpath", allpath);
-
-
-
-
 
 /*
     TableContendor * table  = new TableContendor(1,20);
@@ -131,20 +169,12 @@ ui->console_3->clear();
     delete table;*/
 
 
-
-
     ui->console_3->appendPlainText("Short info about test");
-
     ui->console_3->appendPlainText(tr("Registration Folder Pool %1").arg(regpath) );
     ui->console_3->appendPlainText(tr("Verification Folder Pool %1").arg(allpath) );
-
     ui->console_3->appendPlainText(tr ("Template registration %1 %2").arg(ui->comboTemplateRegist->currentIndex()).arg(ui->comboTemplateRegist->currentText()));
     ui->console_3->appendPlainText(tr ("Template verification %1 %2").arg(ui->comboTemplateVerif->currentIndex()).arg(ui->comboTemplateVerif->currentText()));
-
     ui->console_3->appendPlainText("Information about are flat prints are used is to be entered manually");
-
-
-
 
     TableContendor table = superMatchFolder(regpath, allpath, getTemplate(ui->comboTemplateRegist), getTemplate(ui->comboTemplateVerif), ui->checkRegPrint->isChecked(), ui->checkVerifPrint->isChecked());
     table.outTableToTextFile("out.txt");
@@ -190,7 +220,7 @@ foreach (QString registeredFolderPoolEntry, registeredFolderPoolEntries)
         continue;
 
 
-
+    qDebug()<<tr("Cur watch dir %1").arg(registeredFolderPoolEntry);
 
     matchFolders(iRegisterFoldersPoolPath+"/"+registeredFolderPoolEntry, iVerifFoldersPoolPath, itemplateRegistered, itemplateVerif, isPrintRegister, isPrintVerif, &table, tableColumnCounter);
 tableColumnCounter++;

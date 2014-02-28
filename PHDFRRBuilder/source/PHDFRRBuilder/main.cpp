@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
 
 //заполняем таблицу порогов
     int j=0;
-    for (double i=start; i<1; i+=step)
+    for (double i=start; i<=1; i+=step)
     {
         keytable.insert(j,i);
         counterValuesLowerThanThreshold.insert(j,0);
@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
 
                {
 
-        for (double i=start; i<1; i+=step)
+        for (double i=start; i<=1; i+=step)
             if (val<=i)
             {
 
@@ -129,9 +129,12 @@ int main(int argc, char *argv[])
 
     QTextStream outFileStream (&outfile);
         j=0;
-    for (double i=start; i<1; i+=step)
+
+
+
+    for (double i=start; i<=1; i+=step)
     {
-        outFileStream<<i<<"\t"<<counterValuesLowerThanThreshold.value(j)<<"\n";
+        outFileStream<<i<<"\t"<<(double)counterValuesLowerThanThreshold.value(j)/listOfValues.size() <<"\n";
         j++;
     }
 

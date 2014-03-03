@@ -7,7 +7,10 @@
 #include "tablecontendor.h"
 
 int onArrayOfThresholds (QString infileName, QString outfileName);
+QHash<int, int> onArrayOfThresholds (QList <double> indata,   QList <double> iThresholds);
 
+
+QList < QList < double > > make10lists (TableContendor itable);
 
 
 int main(int argc, char *argv[])
@@ -28,6 +31,8 @@ int main(int argc, char *argv[])
     double start = QString(argv[3]).toDouble();
     double step = QString(argv[4]).toDouble();
 
+
+    cout<<"contendor version";
     cout<<infileName;
     cout <<"\n";
     cout<<outfileName;
@@ -40,8 +45,8 @@ int main(int argc, char *argv[])
 
     TableContendor cnt (1,1);
 
-    cnt.readFileIntoContendor("tablein.txt");
-    cnt.outTableToTextFile("tableout.txt");
+//    cnt.readFileIntoContendor("tablein.txt");
+  //  cnt.outTableToTextFile("tableout.txt");
 
     return 0;
 
@@ -121,6 +126,71 @@ int main(int argc, char *argv[])
     return 0;
     return a.exec();
 }
+/*
+На вход подаётся список данных, это понятно
+И список порогов.
+Важный момент - на выходе хеш, где номеру порога во входном списке  соответствует количество данных ниже его.
+
+
+*/
+
+
+QHash <int, int> onArrayOfThresholds (QList <double> indata,   QList <double> iThresholds)
+{
+        //QTextStream  cout (stdout);
+        QHash <int, int> counterValuesLowerThanThreshold;
+        //QHash <int, double> keytable;
+
+
+        //int j=0;
+        //foreach (double u, iThresholds)
+        for (int j=0; j<iThresholds.size(); j++)
+        {
+            //keytable.insert(j,u);
+            counterValuesLowerThanThreshold.insert(j,0);
+//            j++;
+        }
+
+        //зерно алгоритма
+        foreach (double val, indata)
+        {
+
+            for (int j=0; j<iThresholds.size(); j++)
+            {
+                if (val<=iThresholds.at(j))
+                {
+                counterValuesLowerThanThreshold.insert(j,counterValuesLowerThanThreshold.value(j)+1);
+                }
+            }
+
+
+/*
+
+            foreach (double u, iThresholds)
+             {
+                if (val<=u)
+                {
+                    int t=keytable.key(u);
+                    counterValuesLowerThanThreshold.insert(t,counterValuesLowerThanThreshold.value(t)+1);
+                 }
+            }
+
+  */
+        }
+
+
+
+        return counterValuesLowerThanThreshold;
+}
+
+
+
+
+
+
+
+
+
 
 
 int  onArrayOfThresholds (QString infileName, QString outfileName)
@@ -195,4 +265,18 @@ int  onArrayOfThresholds (QString infileName, QString outfileName)
     infile.close();
     outfile.close();
     return 0;
+}
+
+QList < QList < double > > make10lists (TableContendor itable)
+{
+
+    QList < Qlist <
+    for (int i=0; i<10; i++)
+    {
+
+
+
+    }
+
+
 }

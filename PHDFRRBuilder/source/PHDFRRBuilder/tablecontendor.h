@@ -19,6 +19,9 @@ class TableContendor
 public:
 
     TableContendor(int columns, int rows);
+    TableContendor(QString  infile);
+
+
     void setSizes(int columns, int rows);
 
 
@@ -26,6 +29,12 @@ public:
     void setValue (int column, int row, double value);
     void setColumnName (int column, QString name);
     void setRowName (int row, QString name);
+
+
+    QString getColumnName (int column);
+    QString getRowName (int row);
+
+
 
     int getNumOfColumns ();
     int getNumOfRows ();

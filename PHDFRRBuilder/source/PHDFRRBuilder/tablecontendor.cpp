@@ -7,6 +7,12 @@ setSizes(columns, rows);
 
 }
 
+TableContendor::TableContendor (QString infile)
+{
+readFileIntoContendor (infile);
+
+}
+
 
  void TableContendor::setSizes(int columns, int rows)
  {
@@ -73,6 +79,23 @@ void TableContendor::setRowName (int row, QString name)
     counterRowNames--;
     rowNames[row]=name;
 }
+
+
+
+QString TableContendor::getColumnName (int column)
+{
+    return columnNames[column];
+
+
+}
+
+
+QString  TableContendor::getRowName (int row)
+{
+    return rowNames[row];
+}
+
+
 
 
 

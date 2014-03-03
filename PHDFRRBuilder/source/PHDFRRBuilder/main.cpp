@@ -8,9 +8,8 @@
 
 int onArrayOfThresholds (QString infileName, QString outfileName);
 QHash<int, int> onArrayOfThresholds (QList <double> indata,   QList <double> iThresholds);
-
-
-QList < QList < double > > make10lists (TableContendor itable);
+QList < QList < double > > make10lists (TableContendor itable, int iColumnNumber);
+TableContendor makeFRRForAllFingers (QString infile, QList <QString> thresholds);
 
 
 int main(int argc, char *argv[])
@@ -267,16 +266,78 @@ int  onArrayOfThresholds (QString infileName, QString outfileName)
     return 0;
 }
 
-QList < QList < double > > make10lists (TableContendor itable)
-{
+/*
+из контейнера таблицы делате 10 списков данных, по каждому пальцу по списку. Всё делаетсяиз одного столбца,
+номер которого передаётся входным параметром
+первый список по пальцам, второй список по  данным
+*/
 
-    QList < Qlist <
-    for (int i=0; i<10; i++)
+QList < QList < double > > make10lists (TableContendor itable, int iColumnNumber)
+{
+    //скопипащено понятно откуда
+
+    QString fingers [] = {"rightthumb","rightindex", "rightmiddle", "rightring","rightlittle", "leftthumb","leftindex", "leftmiddle", "leftring","leftlittle"};
+
+    QList < QList < double > > res;
+
+    for (int j=0; j<itable.getNumOfRows(); j++)
+
     {
+        for (int i=0; i<10; i++) //по каждому пальцу
+        {
+            if (!itable.getRowName(j).compare(fingers[i]))
+            {
+                res.at(i).append(itable.getValue(iColumnNumber,j));
+
+            }
+
+        }
+
+    }
+    return res;
+
+}
+
+
+TableContendor makeFRRForAllFingers (QString infile, QList <QString> thresholds)
+{
+    TableContendor indata (infile);
+
+    TableContendor res (indata.getNumOfColumns(), thresholds.size());
+
+    for (int i=0; i<indata.getNumOfColumns(); i++)
+    {//для каждого столбца из таблицы входных данных
+
+
+        QList <QList < double > > doublelist = make10lists(indata, i);
+
+        foreach (QList <double> list, doublelist)
+        {
+            QHash <int, int> fingerhash  =  onArrayOfThresholds(list,thresholds);
+        }
+
+//QHash<int, int> onArrayOfThresholds (QList <double> indata,   QList <double> iThresholds);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
     }
+
+
+
 
 
 }

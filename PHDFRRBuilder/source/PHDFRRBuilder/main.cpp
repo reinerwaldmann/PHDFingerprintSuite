@@ -9,7 +9,7 @@
 int onArrayOfThresholds (QString infileName, QString outfileName);
 QHash<int, int> onArrayOfThresholds (QList <double> indata,   QList <double> iThresholds);
 QList < QList < double > > make10lists (TableContendor itable, int iColumnNumber);
-TableContendor makeFRRForAllFingers (QString infile, QList <QString> thresholds);
+TableContendor makeFRRForAllFingers (QString infile, QList <double> thresholds);
 
 
 int main(int argc, char *argv[])
@@ -41,8 +41,16 @@ int main(int argc, char *argv[])
     cout<<step;
     cout <<"\n";
 
+    QList <double> thresholds;
+    thresholds<<0.9 << 0.99 << 0.999 << 0.9999 << 1;
 
-    TableContendor cnt (1,1);
+    makeFRRForAllFingers(infileName, thresholds).outTableToTextFile("newoutput.txt");
+
+
+
+//    TableContendor cnt (1,1);
+
+
 
 //    cnt.readFileIntoContendor("tablein.txt");
   //  cnt.outTableToTextFile("tableout.txt");
@@ -280,6 +288,14 @@ QList < QList < double > > make10lists (TableContendor itable, int iColumnNumber
 
     QList < QList < double > > res;
 
+    for (int i=0; i<10; i++)
+    {
+        res<<QList<double> ();
+
+    }
+
+
+
     for (int j=0; j<itable.getNumOfRows(); j++)
 
     {
@@ -287,7 +303,7 @@ QList < QList < double > > make10lists (TableContendor itable, int iColumnNumber
         {
             if (!itable.getRowName(j).compare(fingers[i]))
             {
-                res.at(i).append(itable.getValue(iColumnNumber,j));
+                res[i].append(itable.getValue(iColumnNumber,j));
 
             }
 
@@ -299,45 +315,60 @@ QList < QList < double > > make10lists (TableContendor itable, int iColumnNumber
 }
 
 
-TableContendor makeFRRForAllFingers (QString infile, QList <QString> thresholds)
+TableContendor makeFRRForAllFingers (QString infile, QList <double> thresholds)
 {
-    TableContendor indata (infile);
+      TableContendor indata (infile);
 
-    TableContendor res (indata.getNumOfColumns(), thresholds.size());
+
+    TableContendor res (indata.getNumOfColumns(), thresholds.size()*10+1);
+
+    QString fingers [] = {"rightthumb","rightindex", "rightmiddle", "rightring","rightlittle", "leftthumb","leftindex", "leftmiddle", "leftring","leftlittle"};
+
+
+
 
     for (int i=0; i<indata.getNumOfColumns(); i++)
-    {//для каждого столбца из таблицы входных данных
+    {//для каждого столбца из таблицы входных данных, сиречь для каждой папки регистрации
+
+  int rowNum=0; //номер строки в таблице результатов
 
 
-        QList <QList < double > > doublelist = make10lists(indata, i);
+        QList <QList < double > > doublelist = make10lists(indata, i); //первый список - по пальцам, вложенные - список данных
 
-        foreach (QList <double> list, doublelist)
+
+
+
+
+        res.setColumnName(i,indata.getColumnName(i));
+
+        //для каждого пальца, производим подсчёт
+        //foreach (QList <double> list, doublelist)
+        for (int m=0; m<doublelist.size(); m++)
         {
-            QHash <int, int> fingerhash  =  onArrayOfThresholds(list,thresholds);
+            QHash <int, int> fingerhash  =  onArrayOfThresholds(doublelist.at(m),thresholds);
+            //приняли результат для пальца.
+
+            QList<int> keylist=fingerhash.keys();
+            for (int k=0; k<keylist.size(); k++)
+            {
+
+
+                res.setRowName(rowNum, fingers[m]+QString::number(thresholds.at(keylist.at(k))));
+                res.setValue(i, rowNum, fingerhash.value(keylist.at(k)));
+                rowNum++;
+
+
+
+            }
+
+
         }
-
-//QHash<int, int> onArrayOfThresholds (QList <double> indata,   QList <double> iThresholds);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 
 
 
 
+    return res;
 
 }

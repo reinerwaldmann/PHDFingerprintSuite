@@ -60,13 +60,39 @@ double TableContendor::getValue (int column, int row)
 
 void TableContendor::setValue (int column, int row, double value)
 {
+
+    if (row>numOfRows)
+
+    {
+        qDebug() << "ERROR: row number exceedes available number of rows";
+        return;
+
+    }
+    if (column>numOfColumns)
+
+    {
+
+        qDebug() << "ERROR: column number exceedes available number of columns";
+        return;
+
+    }
+
+
+
     table[column][row]=value;
     counterTableCells--;
 }
 
 
 void TableContendor::setColumnName (int column, QString name)
-{
+{   if (column>numOfColumns)
+
+    {
+
+        qDebug() << "ERROR: column number exceedes available number of columns";
+        return;
+
+    }
     columnNames[column]=name;
     counterColumnNames--;
 
@@ -76,6 +102,15 @@ void TableContendor::setColumnName (int column, QString name)
 
 void TableContendor::setRowName (int row, QString name)
 {
+    if (row>numOfRows)
+
+    {
+        qDebug() << "ERROR: row number exceedes available number of rows";
+        return;
+
+    }
+
+
     counterRowNames--;
     rowNames[row]=name;
 }
@@ -185,13 +220,17 @@ if (!infile.open(QIODevice::ReadOnly | QIODevice::Text))
     return 1;
 }
 
+
+
+
+
 QTextStream str (&infile);
 QStringList listOfLines = str.readAll().split("\n");
 QStringList namesLst = listOfLines.at(0).trimmed().split("\t");
 int gnumberOfColumns  = namesLst.count();
 int gnumberOfRows = listOfLines.count();
 
-setSizes(gnumberOfColumns,gnumberOfRows-2);
+setSizes(gnumberOfColumns,gnumberOfRows-1);
 
 
 
@@ -204,7 +243,7 @@ foreach (QString name, namesLst)
     i++;
 }
 
-  ;
+
 
 bool start(1);
 
@@ -215,13 +254,17 @@ foreach (QString line, listOfLines)
 
     QStringList lineList = line.split("\t");
 
+
+
+
     setRowName(i, lineList.at(0));
+
 
 
     for (int j = 1; j<lineList.count()-1; j++)
     {
-
         setValue(j-1, i,lineList.at(j).toDouble());
+
     }
 
 

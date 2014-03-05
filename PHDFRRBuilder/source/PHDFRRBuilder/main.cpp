@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
     QString infileName (argv [1]);
     QString outfileName (argv [2]);
 
-    double start = QString(argv[3]).toDouble();
-    double step = QString(argv[4]).toDouble();
+    double start;// = QString(argv[3]).toDouble();
+    double step;// = QString(argv[4]).toDouble();
 
 
     cout<<"contendor version";
@@ -36,15 +36,15 @@ int main(int argc, char *argv[])
     cout <<"\n";
     cout<<outfileName;
     cout <<"\n";
-    cout<<start;
+    //cout<<start;
     cout <<"\n";
-    cout<<step;
+    //cout<<step;
     cout <<"\n";
 
     QList <double> thresholds;
     thresholds<<0.9 << 0.99 << 0.999 << 0.9999 << 1;
 
-    makeFRRForAllFingers(infileName, thresholds).outTableToTextFile("newoutput.txt");
+    makeFRRForAllFingers(infileName, thresholds).outTableToTextFile(outfileName);
 
 
 

@@ -7,7 +7,7 @@
 #include "tablecontendor.h"
 
 int onArrayOfThresholds (QString infileName, QString outfileName);
-QHash<int, int> onArrayOfThresholds (QList <double> indata,   QList <double> iThresholds);
+QHash<int, double> onArrayOfThresholds (QList <double> indata,   QList <double> iThresholds);
 QList < QList < double > > make10lists (TableContendor itable, int iColumnNumber);
 TableContendor makeFRRForAllFingers (QString infile, QList <double> thresholds);
 
@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
     QString infileName (argv [1]);
     QString outfileName (argv [2]);
 
-    double start = QString(argv[3]).toDouble();
-    double step = QString(argv[4]).toDouble();
+    double start;// = QString(argv[3]).toDouble();
+    double step;// = QString(argv[4]).toDouble();
 
 
     cout<<"contendor version";
@@ -36,15 +36,15 @@ int main(int argc, char *argv[])
     cout <<"\n";
     cout<<outfileName;
     cout <<"\n";
-    cout<<start;
+    //cout<<start;
     cout <<"\n";
-    cout<<step;
+    //cout<<step;
     cout <<"\n";
 
     QList <double> thresholds;
     thresholds<<0.9 << 0.99 << 0.999 << 0.9999 << 1;
 
-    makeFRRForAllFingers(infileName, thresholds).outTableToTextFile("newoutput.txt");
+    makeFRRForAllFingers(infileName, thresholds).outTableToTextFile(outfileName);
 
 
 
@@ -142,10 +142,10 @@ int main(int argc, char *argv[])
 */
 
 
-QHash <int, int> onArrayOfThresholds (QList <double> indata,   QList <double> iThresholds)
+QHash <int, double> onArrayOfThresholds (QList <double> indata,   QList <double> iThresholds)
 {
         //QTextStream  cout (stdout);
-        QHash <int, int> counterValuesLowerThanThreshold;
+        QHash <int, double> counterValuesLowerThanThreshold;
         //QHash <int, double> keytable;
 
 
@@ -166,12 +166,11 @@ QHash <int, int> onArrayOfThresholds (QList <double> indata,   QList <double> iT
             {
                 if (val<=iThresholds.at(j))
                 {
-                counterValuesLowerThanThreshold.insert(j,counterValuesLowerThanThreshold.value(j)+1);
+                    counterValuesLowerThanThreshold.insert(j, counterValuesLowerThanThreshold.value(j)+1.0/indata.size());
                 }
             }
 
-
-/*
+ /*
 
             foreach (double u, iThresholds)
              {
@@ -184,6 +183,8 @@ QHash <int, int> onArrayOfThresholds (QList <double> indata,   QList <double> iT
 
   */
         }
+
+
 
 
 
@@ -345,7 +346,7 @@ TableContendor makeFRRForAllFingers (QString infile, QList <double> thresholds)
         //foreach (QList <double> list, doublelist)
         for (int m=0; m<doublelist.size(); m++)
         {
-            QHash <int, int> fingerhash  =  onArrayOfThresholds(doublelist.at(m),thresholds);
+            QHash <int, double> fingerhash  =  onArrayOfThresholds(doublelist.at(m),thresholds);
             //приняли результат для пальца.
 
             QList<int> keylist=fingerhash.keys();

@@ -94,11 +94,42 @@ templates MainWindow::getTemplate (QComboBox * icombo)
     return normal;
 }
 
+void MainWindow::scriptForFolder (QString personFolder)
+{
+
+
+}
+
+
 void MainWindow::script ()
 {
     ui->console->clear();
     ui->console_2->clear();
     ui->console_3->clear();
+
+
+
+    QString regvol = "/media/DataDrive/Documents/Intek/FingerprintNeueExp/Ilia/11FEB2014";
+    QString vervol= "/media/DataDrive/Documents/Intek/FingerprintNeueExp/Ilia/FORKMicro";
+
+//bool isPrintRegister, bool isPrintVerif
+
+    qDebug()<<"Test";
+    TableContendor  tablex = superMatchFolder(regvol, vervol, normal, normal, 1, 0);
+    tablex.outTableToTextFile("flat-flat-normal-normal-DS45-FORK.txt");
+/*из-за особенностей работы софта регистрации при работе с FORK слово print не добавляется к имени файлов, потому
+надлежит вторую булевскую переменную устанавливать в ноль*/
+
+
+/*Для удобства работы с разными людьми надлежит написать функцию скрипта. каковая производит все означенные здесь исследования,
+принимая на вход всего лишь имя корневой папки человека, в каковой бы находились папки flat  и roll, в которых уже, в свою очередь, бы
+находились папки комплектов*/
+
+
+
+
+    return;
+
 
 /*
     qDebug()<<"Test1";

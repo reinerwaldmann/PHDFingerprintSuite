@@ -75,6 +75,17 @@ public:
 
     void script ();
 
+    /**
+     * @brief scriptForFolder
+     *another wrapper. We give this func a parameter - name of a directory with prints of a person.
+     *Inside must reside two dirs: flat and roll. Inside those must be sets directories.
+     *We perform research and put results to the dir.
+     * @param personFolder
+     */
+
+    void scriptForFolder (QString personFolder);
+
+//также надо сразу запущать утилиту FRRBuilder, чтоб какбе времени не терять, либо включить её в состав
 
 
 private slots:

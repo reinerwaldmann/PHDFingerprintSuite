@@ -96,6 +96,54 @@ templates MainWindow::getTemplate (QComboBox * icombo)
 
 void MainWindow::scriptForFolder (QString personFolder)
 {
+    //performs three experiments
+
+
+
+    ui->console->clear();
+    ui->console_2->clear();
+    ui->console_3->clear();
+
+    QString ds45 = personFolder+"/"+"ds45";
+    QString fork = personFolder+"/"+"fork";
+
+
+    QList <double> thresholds;
+    thresholds<<0.9 << 0.99 << 0.999 << 0.9999 << 0.99999;
+
+    //test1
+    qDebug()<<"flat-flat-normal-normal-DS45-FORK.txt";
+    TableContendor  tablex=superMatchFolder(ds45, fork, normal, normal, 1, 0);
+    tablex = makeFRRForAllFingers(tablex,thresholds);
+    tablex.outTableToTextFile(personFolder+"/"+"FRRflat-flat-normal-normal-DS45-FORK.txt");
+
+    //test2
+    qDebug()<<"roll-flat-normal-normal-DS45-FORK.txt";
+    tablex=superMatchFolder(ds45, fork, normal, normal, 0, 0);
+    tablex = makeFRRForAllFingers(tablex,thresholds);
+    tablex.outTableToTextFile(personFolder+"/"+"FRRroll-flat-normal-normal-DS45-FORK.txt");
+
+
+    //test3
+    qDebug()<<"flat-flat-normal-normal-FORK-FORK.txt";
+    tablex=superMatchFolder(fork, fork, normal, normal, 0, 0);
+    tablex = makeFRRForAllFingers(tablex,thresholds);
+    tablex.outTableToTextFile(personFolder+"/"+"FRRflat-flat-normal-normal-FORK-FORK.txt");
+
+
+
+    //test4
+    qDebug()<<"flat-flat-normal-normal-DS45-DS45.txt";
+    tablex=superMatchFolder(ds45, ds45, normal, normal, 1, 1);
+    tablex = makeFRRForAllFingers(tablex,thresholds);
+    tablex.outTableToTextFile(personFolder+"/"+"FRRflat-flat-normal-normal-DS45-DS45.txt");
+
+    //test4
+    qDebug()<<"roll-flat-normal-normal-DS45-DS45.txt";
+    tablex=superMatchFolder(ds45, ds45, normal, normal, 0, 1);
+    tablex = makeFRRForAllFingers(tablex,thresholds);
+    tablex.outTableToTextFile(personFolder+"/"+"FRRroll-flat-normal-normal-DS45-DS45.txt");
+
 
 
 }
@@ -108,7 +156,7 @@ void MainWindow::script ()
     ui->console_3->clear();
 
 
-
+/*
     QString regvol = "/media/DataDrive/Documents/Intek/FingerprintNeueExp/Ilia/11FEB2014";
     QString vervol= "/media/DataDrive/Documents/Intek/FingerprintNeueExp/Ilia/FORKMicro";
 
@@ -128,7 +176,6 @@ void MainWindow::script ()
 
 
 
-    return;
 
 
 /*

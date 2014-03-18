@@ -14,9 +14,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    tablecontendor.cpp
+    tablecontendor.cpp \
+    FRRBuilderHeader.cpp
 
 HEADERS  += mainwindow.h \
-    tablecontendor.h
+    tablecontendor.h \
+    FRRBuilderHeader.h
 
 FORMS    += mainwindow.ui

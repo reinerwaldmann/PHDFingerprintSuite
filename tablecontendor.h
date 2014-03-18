@@ -7,6 +7,7 @@
 #include <QVector>
 #include <QDebug>
 #include <QFile>
+#include <QStringList>
 struct twoHandsResults
 {
     double  right [5];
@@ -18,10 +19,22 @@ class TableContendor
 public:
 
     TableContendor(int columns, int rows);
+    TableContendor(QString  infile);
+
+
+    void setSizes(int columns, int rows);
+
+
     double getValue (int column, int row);
     void setValue (int column, int row, double value);
     void setColumnName (int column, QString name);
     void setRowName (int row, QString name);
+
+
+    QString getColumnName (int column);
+    QString getRowName (int row);
+
+
 
     int getNumOfColumns ();
     int getNumOfRows ();
@@ -31,6 +44,10 @@ public:
     bool areAllColumnNamesFull();
     char outTableToTextFile(QString filename);
     twoHandsResults averageOnFingers ();
+
+    int readFileIntoContendor (QString ifilename );
+
+
 
 /*
 Больше функций про средние!!!!!!!

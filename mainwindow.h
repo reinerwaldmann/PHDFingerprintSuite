@@ -9,7 +9,7 @@
 #include <tablecontendor.h>
 #include <QComboBox>
 #include <QSettings>
-
+#include "FRRBuilderHeader.h"
 
 namespace Ui {
 class MainWindow;

@@ -113,20 +113,21 @@ void MainWindow::scriptForFolder (QString personFolder)
 
     //test1
     qDebug()<<"flat-flat-normal-normal-DS45-FORK.txt";
-    TableContendor  tablex=superMatchFolder(ds45, fork, normal, normal, 1, 0);
-    tablex = makeFRRForAllFingers(tablex,thresholds);
-    tablex.outTableToTextFile(personFolder+"/"+"FRRflat-flat-normal-normal-DS45-FORK.txt");
+    //TableContendor  tablex=superMatchFolder(ds45, fork, normal, normal, 1, 1);
+  //  tablex = makeFRRForAllFingers(tablex,thresholds);
+   // tablex.outTableToTextFile(personFolder+"/"+"FRRflat-flat-normal-normal-DS45-FORK.txt");
 
-    //test2
+   /* //test2
     qDebug()<<"roll-flat-normal-normal-DS45-FORK.txt";
     tablex=superMatchFolder(ds45, fork, normal, normal, 0, 0);
     tablex = makeFRRForAllFingers(tablex,thresholds);
     tablex.outTableToTextFile(personFolder+"/"+"FRRroll-flat-normal-normal-DS45-FORK.txt");
-
+*/
 
     //test3
     qDebug()<<"flat-flat-normal-normal-FORK-FORK.txt";
-    tablex=superMatchFolder(fork, fork, normal, normal, 0, 0);
+   TableContendor tablex=superMatchFolder(fork, fork, normal, normal, 1, 1);
+    tablex.outTableToTextFile (personFolder+"/"+"debugflat-flat-normal-normal-FORK-FORK.txt");
     tablex = makeFRRForAllFingers(tablex,thresholds);
     tablex.outTableToTextFile(personFolder+"/"+"FRRflat-flat-normal-normal-FORK-FORK.txt");
 
@@ -134,18 +135,18 @@ void MainWindow::scriptForFolder (QString personFolder)
 
     //test4
     qDebug()<<"flat-flat-normal-normal-DS45-DS45.txt";
-    tablex=superMatchFolder(ds45, ds45, normal, normal, 1, 1);
-    tablex = makeFRRForAllFingers(tablex,thresholds);
-    tablex.outTableToTextFile(personFolder+"/"+"FRRflat-flat-normal-normal-DS45-DS45.txt");
+  //  tablex=superMatchFolder(ds45, ds45, normal, normal, 1, 1);
+  //  tablex = makeFRRForAllFingers(tablex,thresholds);
+ //   tablex.outTableToTextFile(personFolder+"/"+"FRRflat-flat-normal-normal-DS45-DS45.txt");
 
     //test4
-    qDebug()<<"roll-flat-normal-normal-DS45-DS45.txt";
+  /*  qDebug()<<"roll-flat-normal-normal-DS45-DS45.txt";
     tablex=superMatchFolder(ds45, ds45, normal, normal, 0, 1);
     tablex = makeFRRForAllFingers(tablex,thresholds);
     tablex.outTableToTextFile(personFolder+"/"+"FRRroll-flat-normal-normal-DS45-DS45.txt");
 
 
-
+*/
 }
 
 

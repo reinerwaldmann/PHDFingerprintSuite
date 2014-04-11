@@ -290,7 +290,8 @@ twoHandsResults TableContendor::averageOnFingers ()
 
   QHash <int ,double>  TableContendor::getRowAverages()
 {
-    if (RowAverages.keys.size()>0) return RowAverages;
+
+      if (RowAverages.keys().size()>0) return RowAverages;
 
     /*
 
@@ -318,3 +319,14 @@ twoHandsResults TableContendor::averageOnFingers ()
      return RowAverages;
 
 }
+
+
+  QString TableContendor::getName()
+  {
+      return name;
+  }
+  void TableContendor::setName(QString iname)
+  {
+      name=iname;
+
+  }

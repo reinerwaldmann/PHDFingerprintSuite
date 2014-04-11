@@ -94,18 +94,19 @@ templates MainWindow::getTemplate (QComboBox * icombo)
     return normal;
 }
 
-TableContendor MainWindow::subScriptForFolder (QString testname, QString iRegisterFoldersPoolPath, QString iVerifFoldersPoolPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif, TableContendor * itbl=0 )
+TableContendor MainWindow::subScriptForFolder (QList <double> thresholds, QString personfolder, QString testname, QString iRegisterFoldersPoolPath, QString iVerifFoldersPoolPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif, TableContendor * itbl )
 //упрощает написание скриптов
 /*+производит тестирование по указанным параметрам
  *+спихивает сырьё в текстовый файл
- *+спихивает FRR  текстовый файл
+ *+спихивает FRR в текстовый файл
  **/
 {
        qDebug()<<testname;
        TableContendor tablex=superMatchFolder(iRegisterFoldersPoolPath, iVerifFoldersPoolPath, itemplateRegistered, itemplateVerif, isPrintRegister, isPrintVerif);
-       tablex.outTableToTextFile(personFolder+"/"+testname.append(".txt"));
+       tablex.outTableToTextFile(personfolder+"/"+testname.append(".txt"));
        tablex = makeFRRForAllFingers(tablex,thresholds);
-       tablex.outTableToTextFile(personFolder+"/"+QString("FRR").append(testname).append(".txt"));
+       tablex.outTableToTextFile(personfolder+"/"+QString("FRR").append(testname).append(".txt"));
+       tablex.setName(testname);
        return tablex;
 }
 
@@ -124,7 +125,77 @@ void MainWindow::scriptForFolder (QString personFolder)
     QString fork = personFolder+"/"+"fork";
 
     QList <double> thresholds;
-    thresholds<< 0.9999 << 0.99999;
+    thresholds<< 0.9999 << 0.99999 << 0.99999;
+
+    QList <TableContendor>results;  //список таблиц результатов
+
+//собственно, тестирование в соответствии с планом эксперимента от 10 Апреля 2014//
+
+
+    /*
+     * internal, internal mobile, internal small, iso card normal
+ds45-fork	rf	1
+ds45-fork	ff	2
+ds45-fork	rf	3
+ds45-fork	ff	4
+
+ds45-ds45	rf	2
+ds45-ds45	ff	3
+ds45-ds45	rf	4
+ds45-ds45	ff	1
+
+fork-fork	ff	4
+fork-fork	ff	2
+
+fork-ds45	ff	1
+sfork-ds45	ff	3
+
+
+flat-flat-normal-normal-DS45-DS45-VOLODJA
+*/
+
+    //test2
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internalmobile-internalmobile-ds45-fork",ds45,fork,internalmobile,internalmobile,1,1));
+
+    //test4
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-normal-normal-ds45-fork",ds45,fork,normal,normal,1,1));
+
+
+
+    //more tests here
+
+
+
+    //printing tests results
+QFile outfile (personFolder+"/"+"FRRResults.txt");
+if (!outfile.open(QIODevice::WriteOnly|QIODevice::Text))
+{
+qDebug()<<"Cannot write FRR results file, error!";
+return;
+}
+
+QTextStream ostream (&outfile);
+
+ foreach (TableContendor tc, results)
+ {
+    ostream<<tc.name;
+
+    QHash <int, double> ra=tc.getRowAverages();
+    QList <int> keylist = ra.keys();
+
+    foreach (int i, keylist)
+    {
+        ostream<<ra.value(i);
+    }
+
+ostream<<"\n";
+ }
+
+ostream.flush();
+
+outfile.close();
+
+
 
 
 
@@ -316,6 +387,11 @@ table->setColumnName(colnameInTable, iRegisterFolderPath.mid(iRegisterFolderPath
  QString compactS = "compact";
  QString recordS = "record";
 
+ QString internalS = "internal";
+ QString internalmobileS = "internal_mobile";
+ QString internalsmallS = "internal_small";
+
+
 
 
  QString verifTemplateStr;
@@ -330,6 +406,20 @@ table->setColumnName(colnameInTable, iRegisterFolderPath.mid(iRegisterFolderPath
   case record:
          verifTemplateStr=recordS;
       break;
+
+  case internal:
+        verifTemplateStr = internalS;
+        break;
+
+  case internalmobile:
+        verifTemplateStr = internalmobileS;
+        break;
+
+  case internalsmall:
+        verifTemplateStr = internalsmallS;
+        break;
+
+
 
   default:
       verifTemplateStr = normalS;
@@ -348,6 +438,20 @@ table->setColumnName(colnameInTable, iRegisterFolderPath.mid(iRegisterFolderPath
    case record:
           registerTemplateStr=recordS;
        break;
+
+
+   case internal:
+         registerTemplateStr = internalS;
+         break;
+
+   case internalmobile:
+         registerTemplateStr = internalmobileS;
+         break;
+
+   case internalsmall:
+         registerTemplateStr = internalsmallS;
+         break;
+
 
    default:
        registerTemplateStr= normalS;

@@ -16,7 +16,7 @@ class MainWindow;
 }
 
 
-enum templates {normal, compact, record};
+enum templates {normal, compact, record, internal, internalmobile, internalsmall};
 
 class MainWindow : public QMainWindow
 {
@@ -86,7 +86,7 @@ public:
 
     void scriptForFolder (QString personFolder);
 
-    TableContendor subScriptForFolder (QString testname, QString iRegisterFoldersPoolPath, QString iVerifFoldersPoolPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif, TableContendor * itbl=0 ); //упрощает написание скриптов
+    TableContendor subScriptForFolder (QList <double> thresholds, QString personfolder, QString testname, QString iRegisterFoldersPoolPath, QString iVerifFoldersPoolPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif, TableContendor * itbl=0 ); //упрощает написание скриптов
 
 
 

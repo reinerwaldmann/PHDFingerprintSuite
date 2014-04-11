@@ -49,6 +49,11 @@ public:
     QHash <int ,double> getRowAverages();  //number of a row - average
 
 
+    QString getName();
+    void setName(QString iname);
+
+
+    QString name;
 
 
 

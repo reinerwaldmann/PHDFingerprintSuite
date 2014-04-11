@@ -83,9 +83,11 @@ public:
      * @param personFolder
      */
 
+
     void scriptForFolder (QString personFolder);
 
-//также надо сразу запущать утилиту FRRBuilder, чтоб какбе времени не терять, либо включить её в состав
+    TableContendor subScriptForFolder (QString testname, QString iRegisterFoldersPoolPath, QString iVerifFoldersPoolPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif, TableContendor * itbl=0 ); //упрощает написание скриптов
+
 
 
 private slots:

@@ -285,3 +285,48 @@ return 0;
 twoHandsResults TableContendor::averageOnFingers ()
 {
 }
+
+
+
+  QHash <int ,double>  TableContendor::getRowAverages()
+{
+
+      if (RowAverages.keys().size()>0) return RowAverages;
+
+    /*
+
+ QVector < QVector < double > > table;
+ //first is a number of a column, second is a number of a row
+ //generic way - to make the table of QVariant types or separate tables of different types
+*/
+    int ncol = getNumOfColumns ();
+    int nrow = getNumOfRows ();
+
+    RowAverages.clear();
+    for (int i=0; i<nrow; i++) //for every row
+    {
+        double sum(0);
+        for (int j=0; j<ncol; j++) //for every column
+        {
+            sum+=getValue(j,i);
+        }
+
+        sum/=ncol;
+        RowAverages.insert(i,sum);
+    }
+
+
+     return RowAverages;
+
+}
+
+
+  QString TableContendor::getName()
+  {
+      return name;
+  }
+  void TableContendor::setName(QString iname)
+  {
+      name=iname;
+
+  }

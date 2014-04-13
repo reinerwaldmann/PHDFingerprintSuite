@@ -46,6 +46,15 @@ public:
     twoHandsResults averageOnFingers ();
 
     int readFileIntoContendor (QString ifilename );
+    QHash <int ,double> getRowAverages();  //number of a row - average
+
+
+    QString getName();
+    void setName(QString iname);
+
+
+    QString name;
+
 
 
 
@@ -63,6 +72,11 @@ protected:
  QVector < QVector < double > > table;
  //first is a number of a column, second is a number of a row
  //generic way - to make the table of QVariant types or separate tables of different types
+
+ QHash <int ,  double> RowAverages;   //holds averages of the rows. Protected, as may be used only after counted
+
+
+
 
 
  QString *columnNames;

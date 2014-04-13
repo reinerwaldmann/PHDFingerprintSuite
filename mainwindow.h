@@ -16,7 +16,7 @@ class MainWindow;
 }
 
 
-enum templates {normal, compact, record};
+enum templates {normal, compact, record, internal, internalmobile, internalsmall};
 
 class MainWindow : public QMainWindow
 {
@@ -83,9 +83,11 @@ public:
      * @param personFolder
      */
 
+
     void scriptForFolder (QString personFolder);
 
-//также надо сразу запущать утилиту FRRBuilder, чтоб какбе времени не терять, либо включить её в состав
+    TableContendor subScriptForFolder (QList <double> thresholds, QString personfolder, QString testname, QString iRegisterFoldersPoolPath, QString iVerifFoldersPoolPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif, TableContendor * itbl=0 ); //упрощает написание скриптов
+
 
 
 private slots:

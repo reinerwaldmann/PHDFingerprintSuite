@@ -73,7 +73,7 @@ public:
     templates getTemplate (QComboBox * icombo);
 
 
-    void script ();
+
 
     /**
      * @brief scriptForFolder

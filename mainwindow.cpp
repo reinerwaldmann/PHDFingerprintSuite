@@ -125,57 +125,13 @@ void MainWindow::scriptForFolder (QString personFolder)
     QString fork = personFolder+"/"+"fork";
 
     QList <double> thresholds;
-
-    TableContendor  tablex=superMatchFolder(ds45, fork, normal, normal, 1, 0);
-    tablex.outTableToTextFile(personFolder+"/"+"flat-flat-normal-normal-DS45-FORK.txt");
-    tablex = makeFRRForAllFingers(tablex,thresholds);
-    tablex.outTableToTextFile(personFolder+"/"+"FRRflat-flat-normal-normal-DS45-FORK.txt");
-
-    //TableContendor  tablex=superMatchFolder(ds45, fork, normal, normal, 1, 1);
-  //  tablex = makeFRRForAllFingers(tablex,thresholds);
-   // tablex.outTableToTextFile(personFolder+"/"+"FRRflat-flat-normal-normal-DS45-FORK.txt");
-
-
-   /* //test2
-    qDebug()<<"roll-flat-normal-normal-DS45-FORK.txt";
-    tablex=superMatchFolder(ds45, fork, normal, normal, 0, 0);
-    tablex.outTableToTextFile(personFolder+"/"+"roll-flat-normal-normal-DS45-FORK.txt");
-    tablex = makeFRRForAllFingers(tablex,thresholds);
-    tablex.outTableToTextFile(personFolder+"/"+"FRRroll-flat-normal-normal-DS45-FORK.txt");
-*/
-
-    //test3
-    qDebug()<<"flat-flat-normal-normal-FORK-FORK.txt";
-
-    tablex=superMatchFolder(fork, fork, normal, normal, 0, 0);
-    tablex.outTableToTextFile(personFolder+"/"+"flat-flat-normal-normal-FORK-FORK.txt");
-
-     tablex=superMatchFolder(fork, fork, normal, normal, 1, 1);
-    tablex.outTableToTextFile (personFolder+"/"+"debugflat-flat-normal-normal-FORK-FORK.txt");
-    tablex = makeFRRForAllFingers(tablex,thresholds);
-    tablex.outTableToTextFile(personFolder+"/"+"FRRflat-flat-normal-normal-FORK-FORK.txt");
-=======
-    thresholds<< 0.9999 << 0.99999 << 0.99999;
+    thresholds<< 0.9999 << 0.99999 << 0.999999;
 
     QList <TableContendor>results;  //список таблиц результатов
->>>>>>> b51f2cece5714ddd39f570ab9586ef89bdf1045e
+
 
 //собственно, тестирование в соответствии с планом эксперимента от 10 Апреля 2014//
-
-
-<<<<<<< HEAD
-    //test4
-    qDebug()<<"flat-flat-normal-normal-DS45-DS45.txt";
-
-    tablex=superMatchFolder(ds45, ds45, normal, normal, 1, 1);
-    tablex.outTableToTextFile(personFolder+"/"+"flat-flat-normal-normal-DS45-DS45.txt");
-    tablex = makeFRRForAllFingers(tablex,thresholds);
-    tablex.outTableToTextFile(personFolder+"/"+"FRRflat-flat-normal-normal-DS45-DS45.txt");
-  //  tablex=superMatchFolder(ds45, ds45, normal, normal, 1, 1);
-  //  tablex = makeFRRForAllFingers(tablex,thresholds);
- //   tablex.outTableToTextFile(personFolder+"/"+"FRRflat-flat-normal-normal-DS45-DS45.txt");
-=======
-    /*
+/*
      * internal, internal mobile, internal small, iso card normal
 ds45-fork	rf	1
 ds45-fork	ff	2
@@ -211,6 +167,10 @@ flat-flat-normal-normal-DS45-DS45-VOLODJA
 
 
     //printing tests results
+
+    if (results.isEmpty()) return;
+
+
 QFile outfile (personFolder+"/"+"FRRResults.txt");
 if (!outfile.open(QIODevice::WriteOnly|QIODevice::Text))
 {
@@ -220,16 +180,49 @@ return;
 
 QTextStream ostream (&outfile);
 
+ostream<<" \t";
+foreach (TableContendor tc, results)
+{
+    ostream<<tc.name<<"\t";
+}
+ostream<<"\n";
+
+
+
+int numRowsRes = ((TableContendor)results.at(0)).getNumOfRows();
+for (int i=0; i<numRowsRes; i++)
+{
+
+    ostream<<((TableContendor)results.at(0)).getRowName(i)<<"\t";
+
+    foreach (TableContendor tc, results)
+    {
+        ostream<<tc.getRowAverages().value(i)<<'\t';
+    }
+
+    ostream<<"\n";
+
+}
+
+ostream.flush();
+
+outfile.close();
+
+
+
+/*
+
+
  foreach (TableContendor tc, results)
  {
-    ostream<<tc.name;
+
 
     QHash <int, double> ra=tc.getRowAverages();
     QList <int> keylist = ra.keys();
 
     foreach (int i, keylist)
     {
-        ostream<<ra.value(i);
+        ostream<<ra.value(i)<<'\t';
     }
 
 ostream<<"\n";
@@ -240,83 +233,16 @@ ostream.flush();
 outfile.close();
 
 
-
+*/
 
 
 }
 
 
-void MainWindow::script ()
-{
-    ui->console->clear();
-    ui->console_2->clear();
-    ui->console_3->clear();
-
-
-/*
-    QString regvol = "/media/DataDrive/Documents/Intek/FingerprintNeueExp/Ilia/11FEB2014";
-    QString vervol= "/media/DataDrive/Documents/Intek/FingerprintNeueExp/Ilia/FORKMicro";
-
-//bool isPrintRegister, bool isPrintVerif
-
-    qDebug()<<"Test";
-    TableContendor  tablex = superMatchFolder(regvol, vervol, normal, normal, 1, 0);
-    tablex.outTableToTextFile("flat-flat-normal-normal-DS45-FORK.txt");
-/*из-за особенностей работы софта регистрации при работе с FORK слово print не добавляется к имени файлов, потому
-надлежит вторую булевскую переменную устанавливать в ноль*/
-
-
-/*Для удобства работы с разными людьми надлежит написать функцию скрипта. каковая производит все означенные здесь исследования,
-принимая на вход всего лишь имя корневой папки человека, в каковой бы находились папки flat  и roll, в которых уже, в свою очередь, бы
-находились папки комплектов*/
-
-
-
-
-
-
-/*
-    qDebug()<<"Test1";
-    TableContendor table = superMatchFolder("/home/reiner/testFolder/Ilia/Roll", "/home/reiner/testFolder/Ilia/Flat", normal, normal, 0, 0);
-    table.outTableToTextFile("roll-flat-normal-normal-DS45-FORK-VOLODJA.txt");
-*/
-
-    QString vol= "/media/0e9cb697-e997-44da-aad5-fd99744c0d31/kristal/Documents/Intek/FingerprintsNeueExp/Vladimir_Ananjev/18FEB2014";
-
-
-    qDebug()<<"Test2";
-    TableContendor  table = superMatchFolder(vol, vol, normal, normal, 0, 1);
-    table.outTableToTextFile("roll-flat-normal-normal-DS45-DS45-VOLODJA.txt");
-
-/*
-    qDebug()<<"Test3";
-    TableContendor table = superMatchFolder("/home/reiner/testFolder/Ilia/Roll", "/home/reiner/testFolder/Ilia/Flat", compact, compact, 0, 0);
-    table.outTableToTextFile("roll-flat-compact-compact-DS45-FORK.txt");
-*/
-
-    qDebug()<<"Test4";
-    table = superMatchFolder(vol, vol, compact, compact, 0, 1);
-    table.outTableToTextFile("roll-flat-compact-compact-DS45-DS45-VOLODJA.txt");
-
-
-    qDebug()<<"Test5";
-    table = superMatchFolder(vol, vol, normal, normal, 1, 1);
-    table.outTableToTextFile("flat-flat-normal-normal-DS45-DS45-VOLODJA.txt");
-
-
-
-
-
-
-
-}
 
 
 void MainWindow::on_pushMe_clicked()
 {
-    script();
-
-    return;
 
 ui->console->clear();
 ui->console_2->clear();

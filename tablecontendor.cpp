@@ -181,6 +181,7 @@ char TableContendor::outTableToTextFile(QString filename)
     {
         out<<columnNames[i]<<"\t";
      }
+    out<<"Averages";
     out <<"\n";
 
 
@@ -193,6 +194,10 @@ char TableContendor::outTableToTextFile(QString filename)
         out<<table[i][j]<<"\t";
 
     }
+
+
+    out<<getRowAverages().value(j);
+
 
     out << "\n";
 }

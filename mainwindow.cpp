@@ -154,15 +154,75 @@ sfork-ds45	ff	3
 flat-flat-normal-normal-DS45-DS45-VOLODJA
 */
 
+
+
+    /*
+АХТУНГ!
+Все тесты предназначены для использования со стандартной базой:
+в каждой папке в папке ds45 лежат прокатки (без префикса или с префиксом roll), и оттиски (с префиксом print)
+в каждой папке в папке fork лежат оттиски (без префикса или с префиксом print)
+
+
+из чего следует пересмотреть БД или код программы (возможные опции: обязательно print, необязательно print, обязательно чтоб не было print)
+
+
+*/
+
+    //BATCH1
+
+    //test1
+    results.append(subScriptForFolder(thresholds, personFolder, "roll-flat-internal-internal-ds45-fork",ds45,fork,internal,internal,0,1));
+
     //test2
     results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internalmobile-internalmobile-ds45-fork",ds45,fork,internalmobile,internalmobile,1,1));
+
+    //test3
+    results.append(subScriptForFolder(thresholds, personFolder, "roll-flat-internalsmall-internalsmall-ds45-fork",ds45,fork,internalsmall,internalsmall,0,1));
 
     //test4
     results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-normal-normal-ds45-fork",ds45,fork,normal,normal,1,1));
 
 
+    //BATCH2
 
-    //more tests here
+
+    //test5
+    results.append(subScriptForFolder(thresholds, personFolder, "roll-flat-internal-internal-ds45-ds45",ds45,ds45,internalmobile,internalmobile,0,1));
+
+    //test6
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internalmobile-internalmobile-ds45-ds45",ds45,ds45,internalsmall,internalsmall,1,1));
+
+    //test7
+    results.append(subScriptForFolder(thresholds, personFolder, "roll-flat-internalsmall-internalsmall-ds45-ds45",ds45,ds45,normal,normal,0,1));
+
+    //test8
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-normal-normal-ds45-ds45",ds45,ds45,internal,internal,1,1));
+
+
+
+
+
+    //BATCH3
+
+
+    //test9
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-normal-normal-fork-fork",fork,fork,normal,normal,1,1));
+
+    //test10
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internalmobile-internalmobile-fork-fork",fork,fork,internalmobile,internalmobile,1,1));
+
+
+
+
+    //BATCH4
+
+
+    //test11
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internal-internal-fork-ds45",fork,ds45,internal,internal,1,1));
+
+    //test12
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internalsmall-internalsmall-fork-ds45",fork,ds45,internalsmall,internalsmall,1,1));
+
 
 
 

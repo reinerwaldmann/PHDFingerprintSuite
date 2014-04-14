@@ -86,7 +86,7 @@ public:
 
     void scriptForFolderMegaMatcher (QString personFolder);
     void scriptForFolderFingerCell (QString personFolder);
-    TableContendor subScriptForFolder (QList <double> thresholds, QString personfolder, QString testname, QString iRegisterFoldersPoolPath, QString iVerifFoldersPoolPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif, TableContendor * itbl=0 , QString ifnameprefix ); //упрощает написание скриптов
+    TableContendor subScriptForFolder (QList <double> thresholds, QString personfolder, QString testname, QString iRegisterFoldersPoolPath, QString iVerifFoldersPoolPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif, QString ifnameprefix=" "); //упрощает написание скриптов
 
 
 

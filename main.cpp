@@ -16,7 +16,8 @@ int main(int argc, char *argv[])
 
 
         QString fld (argv[i]);
-        w.scriptForFolder(fld);
+        w.scriptForFolderFingerCell(fld);
+        //w.scriptForFolderMegaMatcher(fld);
         }
 
     }

@@ -94,7 +94,7 @@ templates MainWindow::getTemplate (QComboBox * icombo)
     return normal;
 }
 
-TableContendor MainWindow::subScriptForFolder (QList <double> thresholds, QString personfolder, QString testname, QString iRegisterFoldersPoolPath, QString iVerifFoldersPoolPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif, TableContendor * itbl )
+TableContendor MainWindow::subScriptForFolder (QList <double> thresholds, QString personfolder, QString testname, QString iRegisterFoldersPoolPath, QString iVerifFoldersPoolPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif, TableContendor * itbl , QString ifnameprefix)
 //упрощает написание скриптов
 /*+производит тестирование по указанным параметрам
  *+спихивает сырьё в текстовый файл
@@ -103,16 +103,18 @@ TableContendor MainWindow::subScriptForFolder (QList <double> thresholds, QStrin
 {
        qDebug()<<testname;
        TableContendor tablex=superMatchFolder(iRegisterFoldersPoolPath, iVerifFoldersPoolPath, itemplateRegistered, itemplateVerif, isPrintRegister, isPrintVerif);
-       tablex.outTableToTextFile(personfolder+"/"+testname.append(".txt"));
+       tablex.outTableToTextFile(personfolder+"/"+ifnameprefix+"_"+testname.append(".txt"));
        tablex = makeFRRForAllFingers(tablex,thresholds);
-       tablex.outTableToTextFile(personfolder+"/"+QString("FRR").append(testname).append(".txt"));
+       tablex.outTableToTextFile(personfolder+"/"+ifnameprefix+"_"+QString("FRR").append(testname).append(".txt"));
        tablex.setName(testname);
        return tablex;
 }
 
-void MainWindow::scriptForFolder (QString personFolder)
+void MainWindow::scriptForFolderMegaMatcher (QString personFolder)
 {
     //performs three experiments
+    //those are for MegaMatcher SDK, with full range of templates
+    QString prefix = "MM";
 
     qDebug()<<"-------------["<<personFolder<<"]--------------";
 
@@ -171,34 +173,32 @@ flat-flat-normal-normal-DS45-DS45-VOLODJA
     //BATCH1
 
     //test1
-    results.append(subScriptForFolder(thresholds, personFolder, "roll-flat-internal-internal-ds45-fork",ds45,fork,internal,internal,0,1));
+    results.append(subScriptForFolder(thresholds, personFolder, "roll-flat-internal-internal-ds45-fork",ds45,fork,internal,internal,0,1, prefix));
 
     //test2
-    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internalmobile-internalmobile-ds45-fork",ds45,fork,internalmobile,internalmobile,1,1));
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internalmobile-internalmobile-ds45-fork",ds45,fork,internalmobile,internalmobile,1,1, prefix));
 
     //test3
-    results.append(subScriptForFolder(thresholds, personFolder, "roll-flat-internalsmall-internalsmall-ds45-fork",ds45,fork,internalsmall,internalsmall,0,1));
+    results.append(subScriptForFolder(thresholds, personFolder, "roll-flat-internalsmall-internalsmall-ds45-fork",ds45,fork,internalsmall,internalsmall,0,1, prefix));
 
     //test4
-    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-normal-normal-ds45-fork",ds45,fork,normal,normal,1,1));
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-normal-normal-ds45-fork",ds45,fork,normal,normal,1,1, prefix));
 
 
     //BATCH2
 
 
     //test5
-    results.append(subScriptForFolder(thresholds, personFolder, "roll-flat-internal-internal-ds45-ds45",ds45,ds45,internalmobile,internalmobile,0,1));
+    results.append(subScriptForFolder(thresholds, personFolder, "roll-flat-internal-internal-ds45-ds45",ds45,ds45,internalmobile,internalmobile,0,1, prefix));
 
     //test6
-    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internalmobile-internalmobile-ds45-ds45",ds45,ds45,internalsmall,internalsmall,1,1));
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internalmobile-internalmobile-ds45-ds45",ds45,ds45,internalsmall,internalsmall,1,1, prefix, prefix));
 
     //test7
-    results.append(subScriptForFolder(thresholds, personFolder, "roll-flat-internalsmall-internalsmall-ds45-ds45",ds45,ds45,normal,normal,0,1));
+    results.append(subScriptForFolder(thresholds, personFolder, "roll-flat-internalsmall-internalsmall-ds45-ds45",ds45,ds45,normal,normal,0,1, prefix));
 
     //test8
-    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-normal-normal-ds45-ds45",ds45,ds45,internal,internal,1,1));
-
-
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-normal-normal-ds45-ds45",ds45,ds45,internal,internal,1,1, prefix));
 
 
 
@@ -206,10 +206,10 @@ flat-flat-normal-normal-DS45-DS45-VOLODJA
 
 
     //test9
-    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-normal-normal-fork-fork",fork,fork,normal,normal,1,1));
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-normal-normal-fork-fork",fork,fork,normal,normal,1,1, prefix));
 
     //test10
-    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internalmobile-internalmobile-fork-fork",fork,fork,internalmobile,internalmobile,1,1));
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internalmobile-internalmobile-fork-fork",fork,fork,internalmobile,internalmobile,1,1, prefix));
 
 
 
@@ -218,10 +218,10 @@ flat-flat-normal-normal-DS45-DS45-VOLODJA
 
 
     //test11
-    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internal-internal-fork-ds45",fork,ds45,internal,internal,1,1));
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internal-internal-fork-ds45",fork,ds45,internal,internal,1,1, prefix));
 
     //test12
-    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internalsmall-internalsmall-fork-ds45",fork,ds45,internalsmall,internalsmall,1,1));
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internalsmall-internalsmall-fork-ds45",fork,ds45,internalsmall,internalsmall,1,1, prefix));
 
 
 
@@ -231,7 +231,7 @@ flat-flat-normal-normal-DS45-DS45-VOLODJA
     if (results.isEmpty()) return;
 
 
-QFile outfile (personFolder+"/"+"FRRResults.txt");
+QFile outfile (personFolder+"/"+"MegaMatcherFRRResults.txt");
 if (!outfile.open(QIODevice::WriteOnly|QIODevice::Text))
 {
 qDebug()<<"Cannot write FRR results file, error!";
@@ -269,31 +269,165 @@ ostream.flush();
 outfile.close();
 
 
+}
 
+void MainWindow::scriptForFolderFingerCell( QString personFolder)
+{
+    //performs three experiments
+    //those are for FingerCell, limited set of templates
+    QString prefix = "FF";
+
+    qDebug()<<"-------------["<<personFolder<<"]--------------";
+    qDebug()<<"-------------[FingerCell]--------------";
+
+    ui->console->clear();
+    ui->console_2->clear();
+    ui->console_3->clear();
+
+    QString ds45 = personFolder+"/"+"ds45";
+    QString fork = personFolder+"/"+"fork";
+
+    QList <double> thresholds;
+    thresholds<< 0.9999 << 0.99999 << 0.999999;
+
+    QList <TableContendor>results;  //список таблиц результатов
+
+
+//собственно, тестирование в соответствии с планом эксперимента от 10 Апреля 2014//
 /*
+     * internal, internal mobile, internal small, iso card normal
+ds45-fork	rf	1
+ds45-fork	ff	2
+ds45-fork	rf	3
+ds45-fork	ff	4
+>>>>>>> b51f2cece5714ddd39f570ab9586ef89bdf1045e
+
+ds45-ds45	rf	2
+ds45-ds45	ff	3
+ds45-ds45	rf	4
+ds45-ds45	ff	1
+
+fork-fork	ff	4
+fork-fork	ff	2
+
+fork-ds45	ff	1
+sfork-ds45	ff	3
 
 
- foreach (TableContendor tc, results)
- {
+flat-flat-normal-normal-DS45-DS45-VOLODJA
+*/
 
 
-    QHash <int, double> ra=tc.getRowAverages();
-    QList <int> keylist = ra.keys();
 
-    foreach (int i, keylist)
+    /*
+АХТУНГ!
+Все тесты предназначены для использования со стандартной базой:
+в каждой папке в папке ds45 лежат прокатки (без префикса или с префиксом roll), и оттиски (с префиксом print)
+в каждой папке в папке fork лежат оттиски (без префикса или с префиксом print)
+
+
+из чего следует пересмотреть БД или код программы (возможные опции: обязательно print, необязательно print, обязательно чтоб не было print)
+
+
+*/
+
+    //BATCH1
+
+    //test1
+    //results.append(subScriptForFolder(thresholds, personFolder, "roll-flat-internal-internal-ds45-fork",ds45,fork,internal,internal,0,1));
+
+    //test2
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internalmobile-internalmobile-ds45-fork",ds45,fork,internalmobile,internalmobile,1,1, prefix));
+
+    //test3
+    //results.append(subScriptForFolder(thresholds, personFolder, "roll-flat-internalsmall-internalsmall-ds45-fork",ds45,fork,internalsmall,internalsmall,0,1));
+
+    //test4
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-normal-normal-ds45-fork",ds45,fork,normal,normal,1,1, prefix));
+
+
+    //BATCH2
+
+
+    //test5
+    //results.append(subScriptForFolder(thresholds, personFolder, "roll-flat-internal-internal-ds45-ds45",ds45,ds45,internalmobile,internalmobile,0,1));
+
+    //test6
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internalmobile-internalmobile-ds45-ds45",ds45,ds45,internalsmall,internalsmall,1,1, prefix));
+
+    //test7
+    //results.append(subScriptForFolder(thresholds, personFolder, "roll-flat-internalsmall-internalsmall-ds45-ds45",ds45,ds45,normal,normal,0,1));
+
+    //test8
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-normal-normal-ds45-ds45",ds45,ds45,internal,internal,1,1, prefix));
+
+
+
+    //BATCH3
+
+
+    //test9
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-normal-normal-fork-fork",fork,fork,normal,normal,1,1, prefix));
+
+    //test10
+    results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internalmobile-internalmobile-fork-fork",fork,fork,internalmobile,internalmobile,1,1, prefix));
+
+
+
+
+    //BATCH4
+
+
+    //test11
+    //results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internal-internal-fork-ds45",fork,ds45,internal,internal,1,1));
+
+    //test12
+    //results.append(subScriptForFolder(thresholds, personFolder, "flat-flat-internalsmall-internalsmall-fork-ds45",fork,ds45,internalsmall,internalsmall,1,1));
+
+
+
+
+    //printing tests results
+
+    if (results.isEmpty()) return;
+
+
+QFile outfile (personFolder+"/"+"FingerCellFRRResults.txt");
+if (!outfile.open(QIODevice::WriteOnly|QIODevice::Text))
+{
+qDebug()<<"Cannot write FRR results file, error!";
+return;
+}
+
+QTextStream ostream (&outfile);
+
+ostream<<" \t";
+foreach (TableContendor tc, results)
+{
+    ostream<<tc.name<<"\t";
+}
+ostream<<"\n";
+
+
+
+int numRowsRes = ((TableContendor)results.at(0)).getNumOfRows();
+for (int i=0; i<numRowsRes; i++)
+{
+
+    ostream<<((TableContendor)results.at(0)).getRowName(i)<<"\t";
+
+    foreach (TableContendor tc, results)
     {
-        ostream<<ra.value(i)<<'\t';
+        ostream<<tc.getRowAverages().value(i)<<'\t';
     }
 
-ostream<<"\n";
- }
+    ostream<<"\n";
+
+}
 
 ostream.flush();
 
 outfile.close();
-
-
-*/
 
 
 }

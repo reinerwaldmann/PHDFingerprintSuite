@@ -1,0 +1,18 @@
+Здесь пишем сведения о данных в базе данных
+Имя		Готовность по FingerCell		Готовность по MegaMatcher	
+Ilia	
+A B
+DK
+Mashkov
+Maxim
+O2
+OMarkitanov
+VAnaniev
+YraKozenko
+Yurims
+
+Под готовностью по FingerCell понимается наличие прокатки и оттиска на ds45 и шаблонов internal_mobile и card_normal
+Под готовностью по MegaMatcher понимается наличие прокатки и оттиска на ds45 и шаблонов internal internal_mobile internal_small card_normal
+
+Можно и такой софт написать, который бы автоматом сканил БД и определял, всё ли находится везде 
+

@@ -43,10 +43,11 @@ public:
     bool areAllRowNamesFull();
     bool areAllColumnNamesFull();
     char outTableToTextFile(QString filename);
-    twoHandsResults averageOnFingers ();
+
 
     int readFileIntoContendor (QString ifilename );
     QHash <int ,double> getRowAverages();  //number of a row - average
+    QHash <int ,double> getColumnAverages();  //number of a column - average
 
 
     QString getName();
@@ -74,6 +75,7 @@ protected:
  //generic way - to make the table of QVariant types or separate tables of different types
 
  QHash <int ,  double> RowAverages;   //holds averages of the rows. Protected, as may be used only after counted
+ QHash <int ,  double> ColumnAverages;   //holds averages of the Columns. Protected, as may be used only after counted
 
 
 

@@ -273,6 +273,8 @@ outfile.close();
 
 void MainWindow::scriptForFolderFingerCell( QString personFolder)
 {
+
+
     //performs three experiments
     //those are for FingerCell, limited set of templates
     QString prefix = "FC";
@@ -325,46 +327,100 @@ void MainWindow::scriptForFolderFingerCell( QString personFolder)
 
     if (results.isEmpty()) return;
 
+    //выводим summary файл
+    outSummaryFile (personFolder+"/"+"FingerCellFRRResults.txt", results);
 
-QFile outfile (personFolder+"/"+"FingerCellFRRResults.txt");
-if (!outfile.open(QIODevice::WriteOnly|QIODevice::Text))
-{
-qDebug()<<"Cannot write FRR results file, error!";
-return;
+
+    //А вот сейчас будет написан самый ужасный костыль в мире!
+
+
+
+    //выплёвываем суммарный отчёт, но только для этого порога
+    outSummaryFile (personFolder+"/"+"FingerCellFRRResults.txt"+"0.99999", results, "0.99999");
+
+    //съедаем полученный нами файл в таблицу
+    TableContendor tttc (personFolder+"/"+"FingerCellFRRResults.txt"+"0.99999");
+
+    //и выплёвываем её же, но уже со средними!!!!
+    tttc.outTableToTextFile(personFolder+"/"+"FingerCellFRRResults.txt"+"0.99999");
+
+
+
+
+
+
 }
 
-QTextStream ostream (&outfile);
-
-ostream<<" \t";
-foreach (TableContendor tc, results)
-{
-    ostream<<tc.name<<"\t";
-}
-ostream<<"\n";
 
 
-
-int numRowsRes = ((TableContendor)results.at(0)).getNumOfRows();
-for (int i=0; i<numRowsRes; i++)
+//strsearch - это порог, записанный строкой. Если он задан, то Summary делается только для строчек,
+//содержащих в имени оный порог. Получается суммарный отчёт для всех пальцев только по одному порогу
+void MainWindow::outSummaryFile (QString ifilename, QList <TableContendor> results, QString strsearch)
 {
 
-    ostream<<((TableContendor)results.at(0)).getRowName(i)<<"\t";
 
-    foreach (TableContendor tc, results)
+    QFile outfile (ifilename);
+    if (!outfile.open(QIODevice::WriteOnly|QIODevice::Text))
     {
-        ostream<<tc.getRowAverages().value(i)<<'\t';
+    qDebug()<<"Cannot write FRR results file, error!";
+    return;
     }
 
+    QTextStream ostream (&outfile);
+
+    ostream<<" \t";
+    foreach (TableContendor tc, results)
+    {
+        ostream<<tc.name<<"\t";
+    }
     ostream<<"\n";
 
+
+
+    int numRowsRes = ((TableContendor)results.at(0)).getNumOfRows();
+    for (int i=0; i<numRowsRes; i++)
+    {
+        //если этот параметр вообще задан
+        if(!strsearch.isEmpty())
+        {
+            //если порог не содержится в названии строки
+
+
+
+            QString mss=((TableContendor)results.at(0)).getRowName(i);
+            if (mss.count("9")!=strsearch.count("9") )
+    {
+            continue;
+            }
+
+
+
+        }
+
+        ostream<<((TableContendor)results.at(0)).getRowName(i)<<"\t";
+
+        foreach (TableContendor tc, results)
+        {
+            ostream<<tc.getRowAverages().value(i)<<'\t';
+        }
+
+        ostream<<"\n";
+
+    }
+
+    ostream.flush();
+
+    outfile.close();
+
+
+
+
 }
 
-ostream.flush();
-
-outfile.close();
 
 
-}
+
+
 
 
 

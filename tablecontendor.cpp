@@ -203,7 +203,12 @@ char TableContendor::outTableToTextFile(QString filename)
 }
 
 
+    out << "ColAverage\t";
 
+     for (int i=0; i<numOfColumns; i++)
+     {
+         out<<getColumnAverages().value(i)<<"\t";
+     }
 
 return 0;
 
@@ -287,9 +292,6 @@ return 0;
 
 
 
-twoHandsResults TableContendor::averageOnFingers ()
-{
-}
 
 
 
@@ -322,6 +324,41 @@ twoHandsResults TableContendor::averageOnFingers ()
 
 
      return RowAverages;
+
+}
+
+  QHash <int ,double> TableContendor::getColumnAverages()
+{
+
+
+      if (ColumnAverages.keys().size()>0) return ColumnAverages;
+
+    /*
+
+ QVector < QVector < double > > table;
+ //first is a number of a column, second is a number of a row
+ //generic way - to make the table of QVariant types or separate tables of different types
+*/
+    int ncol = getNumOfColumns ();
+    int nrow = getNumOfRows ();
+
+    RowAverages.clear();
+    for (int i=0; i<ncol; i++) //for every column
+    {
+        double sum(0);
+        for (int j=0; j<nrow; j++) //for every row
+        {
+            sum+=getValue(i,j);
+        }
+
+        sum/=nrow;
+        ColumnAverages.insert(i,sum);
+    }
+
+
+     return ColumnAverages;
+
+
 
 }
 

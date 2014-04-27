@@ -89,6 +89,8 @@ public:
     TableContendor subScriptForFolder (QList <double> thresholds, QString personfolder, QString testname, QString iRegisterFoldersPoolPath, QString iVerifFoldersPoolPath, templates itemplateRegistered, templates itemplateVerif, bool isPrintRegister, bool isPrintVerif, QString ifnameprefix=" "); //упрощает написание скриптов
 
 
+    void outSummaryFile (QString ifilename, QList <TableContendor> results,  QString strsearch="");
+
 
 private slots:
     void on_pushSel1_clicked();

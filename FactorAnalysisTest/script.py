@@ -1,31 +1,42 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+import sys
+
+
+#берём имя файла из первого выданного параметра
+fname=sys.argv[1]
+if (len(sys.argv)>2):
+        ifShowDebug=1
+else:
+        ifShowDebug=0
+
+
 
 #задаём строку поиска
-variantLine = "rightthumb0.9999"
-
-
+variantLine = "ColAverage"
 
 def splitStripLine (line):
 	lnl=line.split('\t')
 	return lnl[1:len(lnl)-1]
 
-
 #открываем файл 
-f = open("FingerCellFRRResults.txt", "r", 1)
+try:
+        f = open(fname, "r", 1)
+except:
+        print("Error: Wrong filename, aborting")
+        exit(1)
 
 #выдёргиваем строку имён контейнера
 factorNamesList = splitStripLine(f.readline())
-#print ([line for line in factorNamesList])
 
 
 #ищем строку в файле, префикс которой задан строкой variantLine
 lineWithValues=" "
 for line in f:
-   if line.find(variantLine):
-      lineWithValues=line
-      break
+        if (line.find("ColAverage")==0):
+                lineWithValues=line
+                break
 if(lineWithValues==" "):
    print("No variantLine in input file")
    exit(1)
@@ -52,44 +63,33 @@ from scipy import linalg
 
 A=np.array(
 [[1,1,1,1],
+[1,1,1,-1],
 [1,1,-1,1],
+[1,1,-1,-1],
 [1,-1,1,-1],
 [1,-1,-1,-1]])
 
 t=[]
-#счётчик для грязного хака
-i=0
-
+ 
 for line in lineWVList:
-      i+=1
-      if (i==2) or (i==4):
-              continue
-      t.append(float(line))
+       t.append(float(line))
 
-B=np.array(t)
+B=np.array([t])
+B=B.T
 
-print(A)
-print(B)
-
-
+if (ifShowDebug):
+        print ("Matrix A: \n")
+        print(A)
+        print ("Matrix B: \n")
+        print(B)
+        print ("\n \n \n")
+        print ("Matrix Results: \n")
  
- 
-print (np.linalg.solve(A,B))
   
-        
+Solution=(linalg.pinv(A)).dot(B)
 
-
-
-
-
-
-
-
-
-
-
-
-print ("Succeeded")
+for d in Solution:
+        print (d[0])
 
 f.close()
 

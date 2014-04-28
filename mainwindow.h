@@ -91,6 +91,8 @@ public:
 
     void outSummaryFile (QString ifilename, QList <TableContendor> results,  QString strsearch="");
 
+    void launchPythonFactorScript(QString iFname);
+
 
 private slots:
     void on_pushSel1_clicked();

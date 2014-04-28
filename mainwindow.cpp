@@ -345,7 +345,7 @@ void MainWindow::scriptForFolderFingerCell( QString personFolder)
     tttc.outTableToTextFile(personFolder+"/"+"FingerCellFRRResults.txt"+"0.99999");
 
 
-
+    launchPythonFactorScript(personFolder+"/"+"FingerCellFRRResults.txt"+"0.99999");
 
 
 
@@ -419,7 +419,19 @@ void MainWindow::outSummaryFile (QString ifilename, QList <TableContendor> resul
 
 
 
+void MainWindow::launchPythonFactorScript(QString iFname)
+{
+    QString Cmd=  tr("python3 Factornalysis.py %1 LOL").arg(iFname);
+    QProcess *Process= new QProcess(this);
+    Process->start(Cmd); // ,Args
+    if(!Process->waitForFinished())  ms ("Error while processing factor analysis test");
+    QByteArray encodedString = Process->readAll();
 
+    msres (QString("Output of Python3 Script")+ QString(encodedString));
+    delete Process;
+
+
+}
 
 
 
@@ -724,9 +736,6 @@ IMPORTANT: HERE FILTRATION OF FILENAMES TAKES PLACE!
                 table->setRowName(counterRowsInTable, hands[0]+fingers[i]);
 
                 table->setValue(colnameInTable, counterRowsInTable,rs);
-
-
-
 
                  msres (tr("%1 %2 %3").arg(hands[0]).arg(fingers[i]).arg(rs));
 
